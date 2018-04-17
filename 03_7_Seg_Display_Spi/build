@@ -1,0 +1,2 @@
+#!/bin/bash
+g++ -o Display_Test_Exe Display_Test.cpp ../library/bus/SPIDevice.cpp ../library/bus/BusDevice.cpp ../library/display/Max7219.cpp

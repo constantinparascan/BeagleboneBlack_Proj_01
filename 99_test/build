@@ -1,0 +1,2 @@
+#!/bin/bash
+g++ -pthread -ggdb test_00.cpp ../library/string_processor/string_proc.cpp -I../library/string_processor -o test_00

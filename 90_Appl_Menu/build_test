@@ -1,0 +1,2 @@
+#!/bin/bash
+g++ -pthread -ggdb Appl_Menu.cpp Appl_Menu_Cfg.cpp Appl_Menu_Test.cpp ../library/display/Max7219.cpp -I../library/display -D_DEBUG_ENABLE_=ON -o Appl_Menu_Test

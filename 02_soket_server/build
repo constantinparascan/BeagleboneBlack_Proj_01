@@ -1,0 +1,2 @@
+#!/bin/bash
+g++ -pthread -ggdb SS_Manager.cpp ../library/network/SocketServer.cpp ../library/network/ConnectionHandler.cpp -o SS_Manag
