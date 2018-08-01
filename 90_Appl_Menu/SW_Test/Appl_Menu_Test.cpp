@@ -56,6 +56,34 @@ int getch()
     }
 }
 
+/* reads from keypress, doesn't echo */
+int getch_2(void)
+{
+    struct termios oldattr, newattr;
+    int ch;
+    tcgetattr( STDIN_FILENO, &oldattr );
+    newattr = oldattr;
+    newattr.c_lflag &= ~( ICANON | ECHO );
+    tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
+    ch = getchar();
+    tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
+    return ch;
+}
+
+/* reads from keypress, echoes */
+int getche(void)
+{
+    struct termios oldattr, newattr;
+    int ch;
+    tcgetattr( STDIN_FILENO, &oldattr );
+    newattr = oldattr;
+    newattr.c_lflag &= ~( ICANON );
+    tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
+    ch = getchar();
+    tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
+    return ch;
+}
+
 
 int main(void)
 {
@@ -64,32 +92,67 @@ int main(void)
 
     //set_conio_terminal_mode();
     
-   // Appl_Menu_Init();
+    Appl_Menu_Init();
     
     printf("\n\n --------------------------- Start Test ------------------------------\n\n");
     
     
     while(1)
     {
+
+		key = getch_2();
+	
+
+
+		Appl_Menu_MainFunction();
+
         printf("[]");
         scanf("%c", &nValue);
         
         switch(nValue)
         {
+
+			case 'W':
+			case 'w':
+			{
+				printf("\nUP: ");
+	            Appl_Menu_ScrollUp();
+
+				break;
+			}
+
+			case 'S':
+			case 's':
+			{
+				printf("\nDOWN: ");
+	            Appl_Menu_ScrollDown();
+
+				break;
+			}
+
+
             case 'A':
             case 'a':
             {
-                printf("\nLEFT: ");
+                printf("\nLEFT - ENTER: ");
+                Appl_Menu_EnterSubMenu();
+
                 break;
             }
             
             case 'D':
             case 'd':
             {
-                printf("\nRIGHT: ");
+                printf("\nRIGHT - EXIT: ");
+                Appl_Menu_ExitSubMenu();
+
                 break;
             }
-            
+
+			case 'N':
+			case 'n':
+				break;
+			            
             case 'Q':
             case 'q':
             {
@@ -101,6 +164,7 @@ int main(void)
                 
         }
         
+		printf("\n");
         
         //Appl_Menu_MainFunction();
         
