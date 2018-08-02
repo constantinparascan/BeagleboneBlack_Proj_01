@@ -171,7 +171,7 @@ void Appl_Menu_ScrollDown(void)
 	//
 	// Search possible end-up situations
 	//
-	if( nApplMenuCurrentDisplayIndex < ( APPLICATION_MAIN_MENU_COUNTS_TOTAL - 1 ) )
+	if( nApplMenuCurrentDisplayIndex < APPLICATION_MAIN_MENU_COUNTS_TOTAL )
 	{
 	
 		//
@@ -248,6 +248,16 @@ void Appl_Menu_ScrollDown(void)
             
         }// end else case 1
 
+        
+        
+        //
+        // this case is erronaous !!!
+        //
+        if(nApplMenuCurrentDisplayIndex >= APPLICATION_MAIN_MENU_COUNTS_TOTAL)
+        {
+            nApplMenuCurrentDisplayIndex = 1;
+        }
+        
 		
 				
 	}// end if(nApplMenuCurrentDisplayIndex < APPLICATION_MAIN_MENU_COUNTS - 1)
@@ -841,6 +851,8 @@ void Appl_Menu_MainFunction(void)
 			// to do request SPI command for refresh ....
 			//
 			
+            printf("\n ---> refresh ...");
+            
 			//
 			// refresh indication all the menues ...
 			//

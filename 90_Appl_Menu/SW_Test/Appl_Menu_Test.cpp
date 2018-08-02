@@ -84,10 +84,20 @@ int getche(void)
     return ch;
 }
 
+typedef enum
+{
+	KEY_UP = 0,
+	KEY_DOWN,
+    KEY_LEFT,
+	KEY_RIGHT,
+    KEY_EXIT,
+	KEY_NONE
+}E_KEY_TYPE;
 
 int main(void)
 {
     int key = 0;
+	E_KEY_TYPE keyPressed = KEY_NONE;
     unsigned char nValue;
 
     //set_conio_terminal_mode();
@@ -101,19 +111,68 @@ int main(void)
     {
 
 		key = getch_2();
-	
+
+		/* special key */
+		if(key == 27)
+		{
+			key = getch_2();
+			
+			if(key == 91)
+			{
+				key = getch_2();
+
+				switch(key)
+				{
+					case 65:
+						keyPressed = KEY_UP;
+                        break;
+
+					case 66:
+						keyPressed = KEY_DOWN;
+                        break;
+
+					case 67:
+						keyPressed = KEY_RIGHT;
+                        break;
+
+					case 68:
+						keyPressed = KEY_LEFT;
+                        break;
+
+					default:
+						keyPressed = KEY_NONE;
+                        break;
+		
+				}
+			}
+		}
+		else
+        {
+            switch( key )
+            {
+                case 113:
+                case 81:
+                    keyPressed = KEY_EXIT;
+                    break;
+                    
+                default:
+                    keyPressed = KEY_NONE;
+                    
+            }
+            
+        }
 
 
 		Appl_Menu_MainFunction();
-
-        printf("[]");
-        scanf("%c", &nValue);
         
-        switch(nValue)
+
+        /*printf("[]");
+        scanf("%c", &nValue);
+        */
+        switch( keyPressed )
         {
 
-			case 'W':
-			case 'w':
+			case KEY_UP:
 			{
 				printf("\nUP: ");
 	            Appl_Menu_ScrollUp();
@@ -121,8 +180,7 @@ int main(void)
 				break;
 			}
 
-			case 'S':
-			case 's':
+			case KEY_DOWN:
 			{
 				printf("\nDOWN: ");
 	            Appl_Menu_ScrollDown();
@@ -131,8 +189,7 @@ int main(void)
 			}
 
 
-            case 'A':
-            case 'a':
+            case KEY_LEFT:
             {
                 printf("\nLEFT - ENTER: ");
                 Appl_Menu_EnterSubMenu();
@@ -140,8 +197,7 @@ int main(void)
                 break;
             }
             
-            case 'D':
-            case 'd':
+            case KEY_RIGHT:
             {
                 printf("\nRIGHT - EXIT: ");
                 Appl_Menu_ExitSubMenu();
@@ -149,12 +205,9 @@ int main(void)
                 break;
             }
 
-			case 'N':
-			case 'n':
-				break;
-			            
-            case 'Q':
-            case 'q':
+			        
+			/* Q, q*/    
+            case KEY_EXIT:
             {
                 printf("\nQuit ");
                 exit(0);
